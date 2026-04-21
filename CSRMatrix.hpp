@@ -48,6 +48,14 @@ public:
         if (indptr_.size() != n + 1) throw size_mismatch();
         if (indices_.size() != count) throw size_mismatch();
         if (data_.size() != count) throw size_mismatch();
+        if (indptr_[0] != 0) throw size_mismatch();
+        if (indptr_[n] != count) throw size_mismatch();
+        for (size_t i = 0; i < n; ++i) {
+            if (indptr_[i] > indptr_[i + 1]) throw size_mismatch();
+        }
+        for (size_t idx : indices_) {
+            if (idx >= m) throw invalid_index();
+        }
     }
 
     // Copy constructor
