@@ -53,8 +53,11 @@ public:
         for (size_t i = 0; i < n; ++i) {
             if (indptr_[i] > indptr_[i + 1]) throw size_mismatch();
         }
-        for (size_t idx : indices_) {
-            if (idx >= m) throw invalid_index();
+        for (size_t i = 0; i < n; ++i) {
+            for (size_t k = indptr_[i]; k < indptr_[i+1]; ++k) {
+                if (indices_[k] >= m) throw invalid_index();
+                if (k > indptr_[i] && indices_[k] <= indices_[k-1]) throw invalid_index();
+            }
         }
     }
 
