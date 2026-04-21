@@ -138,7 +138,8 @@ public:
 
     // Row slicing
     CSRMatrix getRowSlice(size_t l, size_t r) const {
-        if (l >= r || r > rows_) throw invalid_index();
+        if (l > r || r > rows_) throw invalid_index();
+        if (l == r) return CSRMatrix(0, cols_);
         size_t new_n = r - l;
         CSRMatrix res(new_n, cols_);
         res.indptr_.clear();
